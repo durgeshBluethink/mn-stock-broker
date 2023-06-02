@@ -1,0 +1,45 @@
+plugins {
+    id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("io.micronaut.application") version "3.7.9"
+}
+
+version = "0.1"
+group = "com.bluethink.mn"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    annotationProcessor("io.micronaut:micronaut-http-validation")
+    implementation("io.micronaut:micronaut-http-client")
+    implementation("io.micronaut:micronaut-jackson-databind")
+    implementation("jakarta.annotation:jakarta.annotation-api")
+    runtimeOnly("ch.qos.logback:logback-classic")
+    implementation("org.slf4j:slf4j-simple")
+    // https://mvnrepository.com/artifact/com.github.javafaker/javafaker
+    implementation('net.datafaker:datafaker:1.5.0')
+
+
+}
+
+application {
+    mainClass.set("com.bluethink.mn.Application")
+}
+java {
+    sourceCompatibility = JavaVersion.toVersion("17")
+    targetCompatibility = JavaVersion.toVersion("17")
+}
+
+graalvmNative.toolchainDetection = false
+micronaut {
+    runtime("netty")
+    testRuntime("junit5")
+    processing {
+        incremental(true)
+        annotations("com.bluethink.mn.*")
+    }
+}
+
+
+
